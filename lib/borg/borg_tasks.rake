@@ -1,4 +1,3 @@
-
 namespace :borg do
   [:unit, :functional].each do |t|
     type = t.to_s.sub(/s$/, '')
@@ -11,7 +10,7 @@ namespace :borg do
       Borg::TestUnit.new().run_tests_locally(type, size)
     end
   end
-  
+
   desc "Request server to run test"
   task :build => :environment do
     EM.run {
@@ -25,7 +24,7 @@ namespace :borg do
     borg_daemon.start do
       EM.run {
         puts "Ip is #{Borg::Config.ip} and #{Borg::Config.port}"
-        EM.start_server(Borg::Config.ip,Borg::Config.port,Borg::Server)
+        EM.start_server(Borg::Config.ip, Borg::Config.port, Borg::Server)
       }
     end
   end
@@ -35,7 +34,7 @@ namespace :borg do
     borg_daemon = Borg::Daemon.new("borg_worker")
     borg_daemon.start do
       EM.run {
-        EM.connect(Borg::Config.ip,Borg::Config.port,Borg::Worker)
+        EM.connect(Borg::Config.ip, Borg::Config.port, Borg::Worker)
       }
     end
   end
@@ -54,7 +53,12 @@ namespace :borg do
 
   desc "Run unit and functional test"
   task :test => :environment do
-   Borg::TestUnit.new().run(Borg::Config.test_unit_processes)
+    Borg::TestUnit.new().run(Borg::Config.test_unit_processes)
+  end
+
+  desc "Run rspec unit and functional tests"
+  task :rspec_task => :environment do
+    Borg::RspecTestUnit.new().run(1)
   end
 
   desc "Run cucumber tests"
