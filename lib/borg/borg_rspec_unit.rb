@@ -4,6 +4,7 @@ module Borg
     def run(n = 1)
       redirect_stdout()
       remove_file_groups_from_redis('tests', n) do |index, rspec_files|
+	puts rspec_files.inspect
         rspec_files = rspec_files.split ","
         rspec_files = rspec_files.collect { |x| x[1, x.size + 1] }
         prepare_databse(index) unless try_migration_first(index)
