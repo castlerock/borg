@@ -10,7 +10,7 @@ module Borg
       remove_file_groups_from_redis('cucumber',n) do |index,feature_files|
         prepare_databse(index) unless try_migration_first(index)
 
-        full_feature_path = append_fullpath(rspec_files)
+        full_feature_path = append_fullpath(feature_files)
         args = %w(--format Borg::CucumberBenchmark) + full_feature_path
           failure = Cucumber::Cli::Main.execute(args)
         raise "Cucumber failed" if failure

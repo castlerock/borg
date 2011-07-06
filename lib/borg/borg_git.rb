@@ -28,15 +28,15 @@ module Borg
       if (local_branch_ref == sha)
         puts "local"
         @status = run_in_dir(Rails.root,
-                             "#{run_post_reset_hook} && git submodule init && git submodule update && bundle install")
+                             "#{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local")
       elsif (remote_branch_ref == sha)
          puts "else"
         @status = run_in_dir(Rails.root,
-                             "git reset --hard #{sha} && #{run_post_reset_hook} && git submodule init && git submodule update && bundle install")
+                             "git reset --hard #{sha} && #{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local")
       else
         puts "default"
         @status = run_in_dir(Rails.root,
-                             "git reset --hard HEAD && git fetch && git reset --hard #{sha} && #{run_post_reset_hook} && git submodule init && git submodule update && bundle install")
+                             "git reset --hard HEAD && git fetch && git reset --hard #{sha} && #{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local")
       end
     end
 
