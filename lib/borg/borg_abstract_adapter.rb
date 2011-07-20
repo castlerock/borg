@@ -58,7 +58,9 @@ module Borg
         db_config = get_connection_config(db_counter)
         ActiveRecord::Base.establish_connection(db_config)
         ActiveRecord::Base.connection()
+        puts "Running migrations here"
         migrate_db()
+        puts "Running migrations completed"
         require 'database_cleaner'
         DatabaseCleaner.strategy = :truncation
         DatabaseCleaner.clean
@@ -91,6 +93,7 @@ module Borg
 
     def migrate_db
       ENV["VERBOSE"] = "true"
+      puts "Running the migrate_db"
       Rake::Task["db:migrate"].invoke
     end
 
