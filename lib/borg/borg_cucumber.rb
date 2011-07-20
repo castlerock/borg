@@ -7,7 +7,7 @@ module Borg
       load_environment('cucumber')
       require File.join(File.dirname(__FILE__),"cucumber_benchmark")
       remove_file_groups_from_redis('cucumber',n) do |index,feature_files|
-        prepare_databse(index) unless try_migration_first(index)
+        prepare_databse(index) unless try_migration_first(index,'cucumber')
         full_feature_path = feature_files.split(',').map do |fl|
           Rails.root.to_s + fl
         end
