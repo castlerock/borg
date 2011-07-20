@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{borg}
-  s.version = "0.0.33"
+  s.version = "0.0.34"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["CastleRock"]
-  s.date = %q{2011-03-31}
+  s.date = %q{2011-07-20}
   s.description = %q{A distributed Test Suite runner for Rails, using Eventmachine and Redis}
   s.email = %q{hkumar@crri.co.in}
   s.extra_rdoc_files = [
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "TODO",
     "VERSION",
+    "borg-0.0.33.gem",
     "borg.gemspec",
     "lib/borg.rb",
     "lib/borg/borg_abstract_adapter.rb",
