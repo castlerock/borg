@@ -53,13 +53,13 @@ module Borg
       STDERR.sync = true
     end
 
-    def try_migration_first(db_counter,env_var='test')
+    def try_migration_first(db_counter)
       begin
         db_config = get_connection_config(db_counter)
         ActiveRecord::Base.establish_connection(db_config)
         ActiveRecord::Base.connection()
         puts "Running migrations here"
-        migrate_db(env_var)
+        migrate_db()
         puts "Running migrations completed"
         require 'database_cleaner'
         DatabaseCleaner.strategy = :truncation
@@ -91,12 +91,10 @@ module Borg
       sql_connection.close()
     end
 
-    def migrate_db(env_var='test')
-      ENV['RAILS_ENV'] = env_var 
+    def migrate_db
       ENV["VERBOSE"] = "true"
       puts "Running the migrate_db"
       Rake::Task["db:migrate"].invoke
-      Rake::Task["db:test:prepare"].invoke
     end
 
     def get_connection_config(db_counter)
