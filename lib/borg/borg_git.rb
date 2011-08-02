@@ -26,13 +26,13 @@ module Borg
     def update(sha)
       if (local_branch_ref == sha)
         @status = run_in_dir(Rails.root,
-                             "#{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local")
+                             "#{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local && rake barista:brew --trace")
       elsif (remote_branch_ref == sha)
         @status = run_in_dir(Rails.root,
-                             "git reset --hard #{sha} && #{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local")
+                             "git reset --hard #{sha} && #{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local && rake barista:brew --trace")
       else
         @status = run_in_dir(Rails.root,
-                             "git reset --hard HEAD && git fetch && git reset --hard #{sha} && #{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local")
+                             "git reset --hard HEAD && git fetch && git reset --hard #{sha} && #{run_post_reset_hook} && git submodule init && git submodule update && bundle install --local && rake barista:brew --trace")
       end
     end
 
