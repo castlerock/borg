@@ -6,6 +6,7 @@ module Borg
       puts "Setting rails environment to #{env_name}"
       Rails.env = env_name
       require(File.join(Rails.root, 'config', 'environment'))
+      Rake::Task["barista:brew"].invoke
       $: << "#{Rails.root}/test"
       $: << "#{Rails.root}/test/test_helpers"
       require File.join(Rails.root, "test", "test_helper")
