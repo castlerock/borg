@@ -66,17 +66,22 @@ module Borg
       begin
         puts "Total number of workers are #{workers.size} and their ips are #{Borg::Server.worker_ips}"
         puts "Splitting unit tests in #{Server.test_unit_processes}"
+        @redis_connection = redis
+        remove_file_groups_from_redis('cucumber',n) do |index,feature_files|
+          puts feature_files.inspect
+        end
+
         #puts "Splitting cucumber tests in #{Server.cucumber_processes}"
         TestUnit.new().add_to_redis(Server.test_unit_processes)
-        #CucumberRunner.new().add_to_redis(Server.cucumber_processes)
-        true
-      rescue
-        puts $!.message
-        puts $!.backtrace
-        send_error_to_requester("Error adding files to redis")
-        false
+          #CucumberRunner.new().add_to_redis(Server.cucumber_processes)
+          true
+          rescue
+          puts $!.message
+          puts $!.backtrace
+          send_error_to_requester("Error adding files to redis")
+          false
+        end
       end
-    end
 
     def collect_status_response(ruby_object)
       self.status_reports << ruby_object
