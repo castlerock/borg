@@ -1,6 +1,7 @@
 module Borg
   class Server < EM::Connection
     include EM::P::ObjectProtocol
+    include AbstractAdapter
     cattr_accessor :workers, :requestors, :status_count, :status_reports
 
     self.workers = {}
@@ -66,11 +67,6 @@ module Borg
       begin
         puts "Total number of workers are #{workers.size} and their ips are #{Borg::Server.worker_ips}"
         puts "Splitting unit tests in #{Server.test_unit_processes}"
-        @redis_connection = redis
-        remove_file_groups_from_redis('cucumber',n) do |index,feature_files|
-          puts feature_files.inspect
-        end
-
         #puts "Splitting cucumber tests in #{Server.cucumber_processes}"
         TestUnit.new().add_to_redis(Server.test_unit_processes)
           #CucumberRunner.new().add_to_redis(Server.cucumber_processes)
